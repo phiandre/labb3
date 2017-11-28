@@ -1,17 +1,9 @@
-<<<<<<< HEAD
 
 import java.util.Comparator;
 import java.util.HashMap;
 
-
-
-=======
-import java.util.*;
->>>>>>> ecb081ceb6eb871ed3d9c0b0ae7a107d6dca3709
 public class APrioMap<K,V extends Comparable<? super V>> implements PrioMap<K,V>{
 	private PrioQueue<Pair> heapRep;
-	
-	
 	private HashMap<K,V> map; 	
 	
 	public APrioMap(){
@@ -48,16 +40,11 @@ public class APrioMap<K,V extends Comparable<? super V>> implements PrioMap<K,V>
 		return tmp;
 	}
 
-<<<<<<< HEAD
 	
 	
 	
 	private class PairComparator implements Comparator<Pair<K,V>> {
-=======
-       
-	private class PairComparator<Pair<K,V>> {
-	 
->>>>>>> ecb081ceb6eb871ed3d9c0b0ae7a107d6dca3709
+      
 		@Override
 		public int compare(Pair<K,V> p1, Pair<K,V> p2){
 			return (p1.b).compareTo(p2.b);
