@@ -58,17 +58,22 @@ public class Graph {
     public Path shortestPath(String start, String dest){ 
 		boolean[] known = new boolean[hashRep.size()];
 		int[] dv = new int[hashRep.size()];
+<<<<<<< HEAD
 		
 		APrioMap<String,Integer> q = new APrioMap<String,Integer>();
 		q.put(start,0);
 		
+=======
+        List<String> vertices = new List<String>;
+>>>>>>> 3f71f7764d2b44280c63d38cdd1ebe04c6cc64e3
 		for(int i=0; i<hashRep.size(); i++){
 			known[i] = false;
 			dv[i] = Integer.MAX_VALUE;
 		}
 		dv[0] = 0;
-		
-		while(known.Cast<bool>().Contains(false))
+		veritces.add(start)
+        while(known.Cast<bool>().Contains(false)){
+            
 		
 	}
 }
