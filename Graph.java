@@ -44,14 +44,15 @@ public class Graph {
     public void shortestPath(String start, String dest){ 
 		boolean[] known = new boolean[hashRep.size()];
 		int[] dv = new int[hashRep.size()];
-		
+        List<String> vertices = new List<String>;
 		for(int i=0; i<hashRep.size(); i++){
 			known[i] = false;
 			dv[i] = Integer.MAX_VALUE;
 		}
 		dv[0] = 0;
-		
-		while(known.Cast<bool>().Contains(false))
+		veritces.add(start)
+        while(known.Cast<bool>().Contains(false)){
+            
 		
 	}
 }
