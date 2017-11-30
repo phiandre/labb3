@@ -39,6 +39,8 @@ public class Graph {
 		ArrayList<Pair<String,Integer>> neighbors2 = mapRep.get(node2);
 		neighbors1.add(new Pair(node2,dist));
 		neighbors2.add(new Pair(node1,dist));
+		mapRep.put(node1, neighbors1);
+		mapRep.put(node2, neighbors2);
 	}
     
     public static class Path {
@@ -56,24 +58,50 @@ public class Graph {
     }
     
     public Path shortestPath(String start, String dest){ 
-		boolean[] known = new boolean[hashRep.size()];
-		int[] dv = new int[hashRep.size()];
-<<<<<<< HEAD
+		//boolean[] known = new boolean[mapRep.size()];
+		Map<String,Boolean> known = new HashMap<String,Boolean>();
+		
+		//int[] dv = new int[mapRep.size()];
+		Map<String,Integer> dv = new HashMap<String,Integer>();
 		
 		APrioMap<String,Integer> q = new APrioMap<String,Integer>();
 		q.put(start,0);
+	
 		
-=======
-        List<String> vertices = new List<String>;
->>>>>>> 3f71f7764d2b44280c63d38cdd1ebe04c6cc64e3
-		for(int i=0; i<hashRep.size(); i++){
-			known[i] = false;
-			dv[i] = Integer.MAX_VALUE;
+        List<String> vertices = new ArrayList<String>();
+        
+		for(String key : mapRep.keySet()){
+			known.put(key,false);
+			dv.put(key,Integer.MAX_VALUE);
 		}
-		dv[0] = 0;
-		veritces.add(start)
-        while(known.Cast<bool>().Contains(false)){
-            
+		known.put(start,true);
+		dv.put(start,0);
+		vertices.add(start);
+		int totDist = 0;
+        //while(known.Cast<bool>().Contains(false)){
+        while(q.peek()!=null){
+			Pair<String,Integer> v = q.poll();
+			if( known.get(v.a) ){
+				known.put(v.a,true);
+				ArrayList<Pair<String,Integer>> neighbors = mapRep.get(v.a);
+				for(int i=0; i<neighbors.size(); i++){
+					
+					System.out.println("Hej");
+					Pair<String,Integer> v_prim = neighbors.get(i);
+					System.out.println(known.get(v_prim.a) == false);
+					System.out.println(dv.get(v_prim.a) > dv.get(v.a)+ v_prim.b);
+					if( (known.get(v_prim.a)==false) && (dv.get(v_prim.a) > dv.get(v.a)+ v_prim.b ) ){
+						dv.put(v_prim.a, dv.get(v.a)+ v_prim.b  );
+						vertices.add(v_prim.a);
+						totDist = totDist + v_prim.b;
+						q.put(v_prim.a, dv.get(v_prim.a)); 
+					}
+				}
+			}
+        }
+        if(known.get(dest)==false){ return null;}
+		//int totDist = dv.get(dest);
+		return new Path(totDist, vertices);
 		
 	}
 }
