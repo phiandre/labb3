@@ -59,7 +59,7 @@ public class Graph {
     
     public Path shortestPath(String start, String dest){ 
 		//boolean[] known = new boolean[mapRep.size()];
-		Map<String,Boolean> known = new HashMap<String,Boolean>();
+		Set<String> known = new HashSet<String>();
 		
 		//int[] dv = new int[mapRep.size()];
 		Map<String,Integer> dv = new HashMap<String,Integer>();
@@ -69,39 +69,59 @@ public class Graph {
 	
 		
         List<String> vertices = new ArrayList<String>();
+        Map<String,String> previousNode=new HashMap<>();
         
 		for(String key : mapRep.keySet()){
-			known.put(key,false);
 			dv.put(key,Integer.MAX_VALUE);
+			previousNode.put(key,null);
 		}
-		known.put(start,true);
+		//known.add(start);
 		dv.put(start,0);
-		vertices.add(start);
-		int totDist = 0;
+		//vertices.add(start);
         //while(known.Cast<bool>().Contains(false)){
+        int count = 0;
         while(q.peek()!=null){
+			count++;
 			Pair<String,Integer> v = q.poll();
-			if( known.get(v.a) ){
-				known.put(v.a,true);
+			//System.out.println(v.a);
+			if( !known.contains(v.a) ){
+				known.add(v.a);
+				//System.out.println(v.a);
 				ArrayList<Pair<String,Integer>> neighbors = mapRep.get(v.a);
 				for(int i=0; i<neighbors.size(); i++){
 					
-					System.out.println("Hej");
 					Pair<String,Integer> v_prim = neighbors.get(i);
-					System.out.println(known.get(v_prim.a) == false);
-					System.out.println(dv.get(v_prim.a) > dv.get(v.a)+ v_prim.b);
-					if( (known.get(v_prim.a)==false) && (dv.get(v_prim.a) > dv.get(v.a)+ v_prim.b ) ){
-						dv.put(v_prim.a, dv.get(v.a)+ v_prim.b  );
-						vertices.add(v_prim.a);
-						totDist = totDist + v_prim.b;
+					//System.out.println("v_prim =" +v_prim.a);
+					if( (!known.contains(v_prim.a)) && (dv.get(v_prim.a) > dv.get(v.a)+ v_prim.b ) ){
+						dv.put(v_prim.a, dv.get(v.a)+ v_prim.b );
+						previousNode.put(v_prim.a, v.a);
 						q.put(v_prim.a, dv.get(v_prim.a)); 
+						//vertices.add(v.a);
 					}
 				}
 			}
         }
-        if(known.get(dest)==false){ return null;}
-		//int totDist = dv.get(dest);
-		return new Path(totDist, vertices);
+        System.out.println(count);
+        for(String key : previousNode.keySet() ){
+			//System.out.println(key + previousNode.get(key));
+		}
+        
+        String yee=dest;
+        while(previousNode.get(yee)!=null){
+				//System.out.println(previousNode.get(yee));
+				vertices.add(yee);
+				yee=previousNode.get(yee);
+		}
+		vertices.add(start);
+        Collections.reverse(vertices);
+		
+        if( dv.get(dest) == Integer.MAX_VALUE ){ 
+			//System.out.println(Arrays.toString(vertices.toArray()));
+			//System.out.println("cukc");
+			return null;
+		}
+		int totDist = dv.get(dest);
+		return new Path(totDist, vertices );
 		
 	}
 }
