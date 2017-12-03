@@ -3,8 +3,8 @@ import java.util.Comparator;
 import java.util.HashMap;
 
 public class APrioMap<K,V extends Comparable<? super V>> implements PrioMap<K,V>{
-	private PrioQueue<Pair> heapRep;
-	private HashMap<K,V> map; 	
+	public PrioQueue<Pair> heapRep;
+	public HashMap<K,V> map; 	
 	
 	public APrioMap(){
 		heapRep = new BinHeap(new PairComparator());

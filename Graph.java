@@ -82,8 +82,38 @@ public class Graph {
         int count = 0;
         while(q.peek()!=null){
 			count++;
+			/*
+			System.out.println();
+			System.out.println();
+			System.out.println();
+			System.out.println();
+			System.out.println();
+			
+			System.out.println("Run no. " +count + "---------------------------------");
+			System.out.println("Known indices");
+			Iterator<String> it = known.iterator();
+			while(it.hasNext()){
+				System.out.println(it.next());
+			}
+			for(String key : dv.keySet()){
+				System.out.println("Node: " + key +" ---- Distance: " + dv.get(key));
+			}
+			
+			System.out.println("--------------------");
+			System.out.println("PrioQueue");
+			for(String key : q.map.keySet()){
+				System.out.println("Node: " + key +" ---- Distance: " + q.map.get(key));
+			}
+			System.out.println("------------------------");*/
+			
 			Pair<String,Integer> v = q.poll();
+			//System.out.println("v = " + v.a);
+			//System.out.println("v.b = " + v.b);
+			
+			
+			
 			//System.out.println(v.a);
+			//System.out.println(!known.contains(v.a));
 			if( !known.contains(v.a) ){
 				known.add(v.a);
 				//System.out.println(v.a);
@@ -91,19 +121,26 @@ public class Graph {
 				for(int i=0; i<neighbors.size(); i++){
 					
 					Pair<String,Integer> v_prim = neighbors.get(i);
+					
 					//System.out.println("v_prim =" +v_prim.a);
+					
 					if( (!known.contains(v_prim.a)) && (dv.get(v_prim.a) > dv.get(v.a)+ v_prim.b ) ){
 						dv.put(v_prim.a, dv.get(v.a)+ v_prim.b );
 						previousNode.put(v_prim.a, v.a);
+						if(q.map.containsKey(v_prim.a))
+							q.map.remove(v_prim.a);
 						q.put(v_prim.a, dv.get(v_prim.a)); 
 						//vertices.add(v.a);
 					}
 				}
 			}
         }
-        System.out.println(count);
+        
+		//System.out.println(known.contains("V4"));
+        
+        //System.out.println(count);
         for(String key : previousNode.keySet() ){
-			//System.out.println(key + previousNode.get(key));
+			//System.out.println("Node: " + key +" ---- Previous Node: "+ previousNode.get(key));
 		}
         
         String yee=dest;
@@ -121,6 +158,8 @@ public class Graph {
 			return null;
 		}
 		int totDist = dv.get(dest);
+		
+		
 		return new Path(totDist, vertices );
 		
 	}
